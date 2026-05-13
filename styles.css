@@ -49,41 +49,128 @@ body {
   padding: 8px 4px 24px;
 }
 .hero .logo {
-  width: 168px; height: 168px;
-  display: block; margin: 0 auto 18px;
-  filter: drop-shadow(0 10px 24px rgba(17,17,17,0.18));
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 14px 28px rgba(17,17,17,0.18));
 }
-.wordmark {
+.year-badge {
+  display: inline-block;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(56px, 14vw, 92px);
-  line-height: 0.92;
-  letter-spacing: -0.01em;
-  margin: 0;
-  background: var(--grad-rainbow);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(3px 3px 0 rgba(17,17,17,0.85));
-}
-.wordmark .year {
-  display: block;
-  font-size: clamp(28px, 7vw, 44px);
+  font-size: clamp(40px, 9vw, 64px);
   line-height: 1;
-  margin-top: 8px;
+  color: var(--ink);
+  background: var(--pride-yellow);
+  padding: 10px 24px 8px;
+  border-radius: var(--r-pill);
+  margin-top: -8px;
+  transform: rotate(-3deg);
+  box-shadow: 4px 4px 0 rgba(17,17,17,0.85);
 }
 .tagline {
+  display: block;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(20px, 4.5vw, 28px);
-  color: var(--ink);
-  margin: 18px auto 0;
-  display: inline-block;
+  font-size: clamp(18px, 4vw, 24px);
+  color: var(--ink-2);
+  letter-spacing: 0.04em;
+  margin-top: 20px;
+}
+
+/* ============== Crowdfunding CTA (hero panel) ============== */
+.crowdfund {
+  margin-top: 28px;
   background: var(--pride-yellow);
-  padding: 10px 20px 8px;
+  border: 3px solid var(--ink);
+  border-radius: var(--r-xl);
+  padding: 24px 24px 22px;
+  box-shadow: 6px 6px 0 var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.crowdfund::before {
+  /* rainbow stripe at top */
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 8px;
+  background: var(--grad-rainbow);
+}
+.cf-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgba(17,17,17,0.08);
+  padding: 5px 12px;
   border-radius: var(--r-pill);
-  transform: rotate(-2deg);
-  box-shadow: 4px 4px 0 rgba(17,17,17,0.85);
+  margin-bottom: 14px;
+  margin-top: 4px;
+}
+.cf-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--pride-red);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(1.4); opacity: 0.6; }
+}
+@media (prefers-reduced-motion: reduce) { .cf-dot { animation: none; } }
+
+.crowdfund h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(26px, 6vw, 36px);
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+.crowdfund p {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  margin: 0 0 18px;
+}
+.cf-btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  width: 100%;
+  justify-content: center;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(18px, 4.4vw, 22px);
+  white-space: nowrap;
+  padding: 16px 22px;
+  border-radius: var(--r-pill);
+  text-decoration: none;
+  transition: transform 180ms cubic-bezier(.34,1.56,.64,1), background 180ms ease;
+}
+.cf-btn:hover {
+  transform: translateY(-2px) scale(1.01);
+  background: #000;
+  color: #fff;
+}
+.cf-btn:active { transform: scale(0.98); }
+.cf-btn .cf-arrow { transition: transform 200ms ease; }
+.cf-btn:hover .cf-arrow { transform: translateX(4px); }
+.cf-meta {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-2);
+  letter-spacing: 0.04em;
+  text-align: center;
+  margin-top: 12px;
+  opacity: 0.7;
 }
 
 /* ============== Detail card (Wo? Tag? Wann?) ============== */
@@ -91,7 +178,7 @@ body {
   background: #fff;
   border-radius: var(--r-xl);
   padding: 22px 18px;
-  margin-top: 32px;
+  margin-top: 36px;
   box-shadow: var(--shadow-md);
   position: relative;
 }
