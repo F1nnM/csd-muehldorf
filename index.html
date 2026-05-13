@@ -11,6 +11,10 @@
 <meta property="og:image" content="assets/logo-eckig.png">
 <link rel="stylesheet" href="styles.css">
 
+<!-- Cloudflare Web Analytics: page views + referrers (no cookies, GDPR-friendly) -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token":"REPLACE_WITH_CF_WEB_ANALYTICS_TOKEN","spa":true}'></script>
+
 <template id="__bundler_thumbnail" data-bg-color="#E2A9F1">
   <svg viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg">
     <!-- Simplified rainbow Stadtturm tower -->
@@ -249,6 +253,27 @@
     const blob = new Blob([ics], { type: 'text/calendar' });
     const url = URL.createObjectURL(blob);
     document.querySelectorAll('a[href$=".ics"]').forEach(a => { a.href = url; });
+  })();
+
+  // Click tracking via virtual pageviews — CF Web Analytics (spa:true) picks
+  // these up and they show up in the dashboard as /click/<slug>.
+  (function trackClicks() {
+    function slugFor(a) {
+      if (a.classList.contains('donate')) return 'donate';
+      if (a.href.includes('instagram.com')) return 'instagram';
+      if (a.href.startsWith('mailto:')) return 'email';
+      if (a.href.endsWith('.ics') || a.href.startsWith('blob:')) return 'calendar';
+      return null;
+    }
+    document.addEventListener('click', function (e) {
+      const a = e.target.closest && e.target.closest('a.linkcard');
+      if (!a) return;
+      const slug = slugFor(a);
+      if (!slug) return;
+      const orig = location.pathname + location.search + location.hash;
+      history.replaceState({}, '', '/click/' + slug);
+      setTimeout(() => history.replaceState({}, '', orig), 50);
+    });
   })();
 </script>
 
